@@ -31,6 +31,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title><?php echo $appTitle ; ?></title>
+<link href="weatherapp.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -39,13 +40,13 @@
 
     <p>
     	<label for="myLoc">Location (postcode or town)</label>
-    	<input name="myLoc" type="text" id="myLoc" value="Oxford, UK" />
+    	<input name="myLoc" type="text" id="myLoc" <?php echo formval('Oxford, UK') ; ?> />
     </p>
     
     <p>
-    	<input type="radio" name="myUnits" id="myUnitsI" value="Imperial" /> <label for="myUnitsI">Imperial</label><br />
-        <input type="radio" name="myUnits" id="myUnitsM" value="Metric" /> <label for="myUnitsM">Metric</label><br />
-        <input name="myUnits" type="radio" id="myUnitsU" value="UK" checked="checked"/> 
+    	<input type="radio" name="myUnits" id="myUnitsI" value="Imperial" <?php echo ischecked('Imperial') ; ?> /> <label for="myUnitsI">Imperial</label><br />
+        <input type="radio" name="myUnits" id="myUnitsM" value="Metric" <?php echo ischecked('Metric') ; ?> /> <label for="myUnitsM">Metric</label><br />
+        <input name="myUnits" type="radio" id="myUnitsU" value="UK" <?php echo ischecked('UK') ; ?>/> 
         <label for="myUnitsU">UK (Celcius, miles, mm)</label>
     </p>
     
@@ -63,14 +64,33 @@ Units: <?php echo $units ; ?></p>
 	// make a weather object to look examine
 	$myWeather = simplexml_load_file($requestURI);
 	
+	// set up a counter variable for use later
+	$counter = 0 ;
+		
 	foreach ($myWeather->weather as $day) {
+
+		// create the visuals for this particular day in précis form
+		echo "<div class='oneday' onmousedown='doSomething(\"day".$counter."\"'>";
 		echo "<p>";
 		echo "<img src='". $day->weatherIconUrl ."' alt='".$day->weatherDesc."' style='float:left;' />" ;
 		echo "Date: ". $day->date .": ".$day->weatherDesc."<br />" ;
 		echo "Temp max/min: ". $day->tempMaxC ."/". $day->tempMinC ."<br />" ;
 		echo "Rainfall: ". $day->precipMM ."mm<br />" ;
-		echo "etc.<br />";
 		echo "</p>";
+		echo "</div>";
+
+		// create the visuals for this particular day in full form
+		echo "<div class='oneday_detail' id='day".$counter."'>";
+		echo "<p>";
+		echo "<img src='". $day->weatherIconUrl ."' alt='".$day->weatherDesc."' style='float:left;' />" ;
+		echo "Date: ". $day->date .": ".$day->weatherDesc."<br />" ;
+		echo "Temp max/min: ". $day->tempMaxC ."/". $day->tempMinC ."<br />" ;
+		echo "Rainfall: ". $day->precipMM ."mm<br />" ;
+		echo "</p>";
+		echo "</div>";
+		
+		// increment the counter
+		$counter++ ;
 	}
 
 
