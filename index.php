@@ -1,4 +1,4 @@
-<!DOCTYPE html >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- 
 
 	Weather Web App as per request from Powershift
@@ -35,12 +35,26 @@
 <!--
 function showHide(a) {
 		// for debug
-		window.alert(a);
+		//window.alert("day"+0 == a);
 		// show the detail for the element clicked; hide everything else
-		/*
+		
+		// This bit was buggy and I couldn't work it out so I've 
+		// opted to do it the long-winded way and add this to the
+		// refactoring backlog.
+		document.getElementById('day0').style.visibility="hidden";
+		document.getElementById('day1').style.visibility="hidden";
+		document.getElementById('day2').style.visibility="hidden";
+		document.getElementById('day3').style.visibility="hidden";
+		document.getElementById('day4').style.visibility="hidden";
+		document.getElementById(a).style.visibility="visible";
+		
+		
+		
+		/*  
 		idString = "day"+0 ;
-		for (int i=0; i<=5; i++) {
+		for (int i=0; i<4; i++) {
 			idString = "day"+i ;
+			window.alert(idString);
 			if (idString==a) {
 				document.getElementById(a).style.visibility="visible";
 			} else {
@@ -49,13 +63,7 @@ function showHide(a) {
 		} */
 	}
 
-function MM_showHideLayers() { //v9.0
-  var i,p,v,obj,args=MM_showHideLayers.arguments;
-  for (i=0; i<(args.length-2); i+=3) 
-  with (document) if (getElementById && ((obj=getElementById(args[i]))!=null)) { v=args[i+2];
-    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
-    obj.visibility=v; }
-}
+
 //-->
 </script>
 </head>
@@ -80,7 +88,7 @@ function MM_showHideLayers() { //v9.0
         </p>
     
             <p><input type="submit" value="Get the weather!" /></p>
-            <p><a href="#" onclick="MM_showHideLayers('left_col','','hide')">asdf</a></p>
+           
       </form>
     </div>
     
@@ -123,7 +131,7 @@ function MM_showHideLayers() { //v9.0
 				// because of the units choice we'll have to run 
 				
                 // create the visuals for this particular day in précis form
-                echo "<div class='oneday' onmouseover='showHide(\'day".$counter."\')'>";
+                echo "<div class=\"oneday\" onmouseover=\"showHide('day".$counter."')\">";
                 echo "<p>";
                 echo $day->date ."<br /><img src='". $day->weatherIconUrl ."' alt='".$day->weatherDesc."' />" ;
                 echo "<br />".$day->weatherDesc ;
@@ -136,7 +144,7 @@ function MM_showHideLayers() { //v9.0
 				}
 				
                 echo "</p>";
-                echo "<p><a href='#' onclick='showHide(\'day".$counter."\'); return false;'>details</a></p>";
+                echo "<p><a href=\"#\" onclick=\"showHide('day".$counter."'); return false;\">details</a></p>";
                 echo "</div>";
             
                 $counter++ ;
