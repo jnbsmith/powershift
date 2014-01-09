@@ -40,7 +40,7 @@ function formval($val) {
 } 
  
 function ischecked($val) {		
-	if ($val == $_POST['myUnits']) {
+	if ($val == $_POST['myUnits'] or (!isset($_POST['myUnits']) and ($val == "UK"))) {
 		return "checked='checked'";
 	} else {
 		return "";
@@ -52,20 +52,13 @@ function ischecked($val) {
 	/*
 	 *	CREATE THE REQUEST URI
 	 *	$l is location
-	 *	$d is day number (1-5 is for particular day; 0 is all 5)
-	 *
 	 */
 
-function getRequestUri($l, $d) {
+function getRequestUri($l) {
 
 	global $API_KEY, $API_URI_ROOT ;
-	 
-	if ($d==0) {
-		return $API_URI_ROOT . "q=". $l . "&format=xml&num_of_days=5&key=". $API_KEY ;
-	} else {
-		// need to figure out a date shift 
-		return $API_URI_ROOT . "q=". $l . "&format=xml&num_of_days=1&key=".$API_KEY ;
-	}
+	return $API_URI_ROOT . "q=". $l . "&format=xml&num_of_days=5&key=". $API_KEY ;
+
 }
 
 

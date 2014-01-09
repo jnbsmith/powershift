@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 <!-- 
 
 	Weather Web App as per request from Powershift
@@ -21,8 +21,8 @@
 	$units = getUnits($_POST['myUnits']);
 
 	// make api request uri
-	$requestURI = getRequestUri($location, 0) ;
-	// note the 0 is a code denoting max number of days (=5) to be used later to offset selected day
+	$requestURI = getRequestUri($location) ;
+
 
 ?>
 
@@ -33,21 +33,30 @@
 
 <script type="text/javascript">
 <!--
-	function showHide(a) {
+function showHide(a) {
 		// for debug
 		window.alert(a);
 		// show the detail for the element clicked; hide everything else
+		/*
 		idString = "day"+0 ;
 		for (int i=0; i<=5; i++) {
 			idString = "day"+i ;
 			if (idString==a) {
-				document.getElementById(a).style.display="block";
+				document.getElementById(a).style.visibility="visible";
 			} else {
-				document.getElementById(a).style.display="none";
+				document.getElementById(a).style.visibility="hidden";
 			}
-		}
+		} */
 	}
-// -->
+
+function MM_showHideLayers() { //v9.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) 
+  with (document) if (getElementById && ((obj=getElementById(args[i]))!=null)) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+//-->
 </script>
 </head>
 
@@ -71,6 +80,7 @@
         </p>
     
             <p><input type="submit" value="Get the weather!" /></p>
+            <p><a href="#" onclick="MM_showHideLayers('left_col','','hide')">asdf</a></p>
       </form>
     </div>
     
@@ -84,8 +94,12 @@
     
         // only display stuff if an object is returned without an error
         if ($myWeather->error) {
-            echo "<p>". $myWeather->error->msg ."</p>";
-            echo "<p>Couldn't find any data for ". $location ." - please check spelling and try again</p>" ;
+			if ($location) { // no error when you first hit the page
+	            echo "<p>". $myWeather->error->msg ."</p>";
+    	        echo "<p>Couldn't find any data for ". $location ." - please check spelling and try again</p>" ;
+			} else {
+				echo "<p>Enter a location or UK postcode and press the button.</p>";
+			}
             
         } else {
             // good to go!
@@ -122,7 +136,7 @@
 				}
 				
                 echo "</p>";
-                echo "<p><a href='javascript:void(0);' onclick='showHide(\'day".$counter."\'); return false;'>details</a></p>";
+                echo "<p><a href='#' onclick='showHide(\'day".$counter."\'); return false;'>details</a></p>";
                 echo "</div>";
             
                 $counter++ ;
