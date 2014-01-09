@@ -38,7 +38,7 @@ div.oneday {
 
 div.oneday_detail {
 	position:absolute;
-	width:846px;
+	width:697px;
 	background-color: #F0F0F0;
 	border: 2px solid #333333;
 
@@ -48,6 +48,7 @@ div.oneday_detail {
 }
 
 div.oneday_detail img {
-	margin-left:-145px;
+	margin-left:-110px;
+	margin-top:40px;
 	position:absolute;
 }

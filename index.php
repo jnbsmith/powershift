@@ -52,7 +52,9 @@
 </head>
 
 <body>
+
 <div id="wrapper">
+<h1>Weather Web App</h1>
     <div id="left_col">
       <form id="myForm" method="post" action="<?php echo $_SERVER['PHP_SELF'] ; ?>"> <!-- ugly first - get the thing working! -->
        
@@ -69,7 +71,6 @@
         </p>
     
             <p><input type="submit" value="Get the weather!" /></p>
-            <p><a href="#" onclick="showHide('asdf')">asdf</a></p>
       </form>
     </div>
     
@@ -138,11 +139,35 @@
         
                 // create the visuals for this particular day in full form
                 echo "<div class='oneday_detail' id='day".$counter."'>";
-                echo "<p>Details for ".$day->date;
                 echo "<img src='". $day->weatherIconUrl ."' alt='".$day->weatherDesc."' />" ;
-                echo "Date: ". $day->date .": ".$day->weatherDesc."<br />" ;
-                echo "Temp max/min: ". $day->tempMaxC ."/". $day->tempMinC ."<br />" ;
-                echo "Rainfall: ". $day->precipMM ."mm<br />" ;
+				echo "<h4>Details for ".$day->date ."</h4>";
+
+                echo "<p><strong>". $day->weatherDesc."</strong>" ;
+				
+				echo "<br />";	// temperature
+				if ($units!="Imperial") {
+	                echo "Temp range: ". $day->tempMinC ." - ". $day->tempMaxC ."&deg;C<br />" ;
+				} else {
+				    echo "Temp range: ". $day->tempMinF ." - ". $day->tempMaxF ."&deg;F<br />" ;
+				}
+				
+				echo "<br />"; // windspeed
+				if ($units!="Metric") {
+	                echo "Wind speed: ". $day->windspeedMiles ."mph in a ". $day->winddirection ." direction" ;
+				} else {
+				    echo "Wind speed: ". $day->windspeedKmph ."kph in a ". $day->winddirection ." direction" ;
+				}
+				
+                echo "<br />" ; // rainfall
+				if ($units!="Imperial") {
+	                echo "Precipitation: ". $day->precipMM ."mm" ;
+				} else {
+				    echo "Precipitation: ". ($day->precipMM/25.4) ." inches" ;
+					// this should be cleaned up to show 1/8" increments
+					// something to do during code refactoring 
+				}
+				
+
                 echo "</p>";
                 echo "</div>";
                 
