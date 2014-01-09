@@ -3,7 +3,25 @@
 
 body {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
+}
+
+div#wrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:50px;
+	width:1100px;
+}
+
+div#left_col {
+	float: left;
+	height: 215px;
+	width: 180px;
+	margin-right: 20px;
+}
+
+div#right_col {
+	float: left;
 }
 
 div.oneday {
@@ -16,4 +34,20 @@ div.oneday {
 	width: 150px;
 	border: 2px solid #333333;
 	
+}
+
+div.oneday_detail {
+	position:absolute;
+	width:846px;
+	background-color: #F0F0F0;
+	border: 2px solid #333333;
+
+	margin: 8px;
+	padding: 2px;
+	padding-left:150px;
+}
+
+div.oneday_detail img {
+	margin-left:-145px;
+	position:absolute;
 }
